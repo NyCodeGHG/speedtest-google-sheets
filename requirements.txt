@@ -1,1 +1,4 @@
-speedtest_cli==2.0.2
+google_api_python_client==2.36.0
+google_auth_oauthlib==0.4.6
+protobuf==3.19.4
+speedtest_cli==2.1.3

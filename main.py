@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-import speedtest
+import os
+from speedtest import Speedtest
+import sheets
 
-s = speedtest.Speedtest()
+def run_speedtest():
+    s = Speedtest()
 
-s.get_best_server()
-s.download()
-s.upload()
+    s.get_best_server()
+    s.download()
+    s.upload()
 
-print(s.results.json())
+    return s.results
+
+print("Running speedtest...")
+test = run_speedtest()
+print("Speedtest finished.")
+print("Download: {}\nUpload: {}\nPing: {}\n".format(test.download, test.upload, test.ping))
+print("Inserting into Google Docs Spreadsheet...")
+sheets.insert_speedtest_result(test, os.environ['SPREADSHEET_ID'])
