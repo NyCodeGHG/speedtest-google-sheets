@@ -8,3 +8,4 @@ services:
     volumes:
       - ./credentials.json:/app/credentials.json
       - ./token.json:/app/token.json
+      - /etc/localtime:/etc/localtime:ro
