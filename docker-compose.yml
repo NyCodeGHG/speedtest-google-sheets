@@ -7,3 +7,4 @@ services:
       SPREADSHEET_ID: <your spreadsheet id>
     volumes:
       - ./credentials.json:/app/credentials.json
+      - ./token.json:/app/token.json
