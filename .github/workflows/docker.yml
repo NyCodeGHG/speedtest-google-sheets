@@ -1,0 +1,34 @@
+name: Docker Image CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Push
+    if: "!contains(github.event.commits[0].message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to ghcr.io
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Image
+        run: |
+          docker buildx build \
+                  --tag ghcr.io/nycodeghg/speedtest-google-sheets/speedtest:"$GITHUB_SHA" \
+                  --tag ghcr.io/nycodeghg/speedtest-google-sheets/speedtest:latest \
+                  --file ./Dockerfile \
+                  --output type=image,push=true .
