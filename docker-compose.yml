@@ -5,3 +5,5 @@ services:
     image: ghcr.io/nycodeghg/speedtest-google-sheets/speedtest:latest
     environment:
       SPREADSHEET_ID: <your spreadsheet id>
+    volumes:
+      - ./credentials.json:/app/credentials.json
